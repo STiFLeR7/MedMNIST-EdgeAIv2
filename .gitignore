@@ -23,3 +23,6 @@ outputs/
 *.log
 
 MedMNIST-EdgeAI/
+
+data/
+models/
