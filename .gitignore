@@ -1,0 +1,25 @@
+# Python / PyTorch
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+*.pth
+*.ckpt
+*.pt
+
+# data / outputs
+external_data/downloads/
+outputs/
+*.zip
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# temp
+*.log
+
+MedMNIST-EdgeAI/
