@@ -14,7 +14,6 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import models, transforms, datasets
 import torch.nn.functional as F
-
 def set_seed(seed):
     random.seed(seed)
     torch.manual_seed(seed)
