@@ -1,0 +1,4 @@
+model,seed,tau,macro_f1_opt
+distilled_efficientnetb0_ham10000,seed_0,0.0,0.6557557597068773
+distilled_mobilenetv2_ham10000,seed_0,0.0,0.5410765632639023
+distilled_resnet18_ham10000,seed_0,0.0,0.7545325524585199

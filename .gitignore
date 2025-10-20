@@ -26,3 +26,5 @@ MedMNIST-EdgeAI/
 
 data/
 models/
+
+external_data/
