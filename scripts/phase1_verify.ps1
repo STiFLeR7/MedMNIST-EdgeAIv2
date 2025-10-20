@@ -110,11 +110,10 @@ $thresholdCols = @("threshold","tau","cutoff","operating_point","op_point","t","
 Assert-AnyColumn $opPoints $thresholdCols "threshold-like column"
 
 $metricNameCols = @("metric","metric_name","target_metric","metric_id")
-$metricValueCols = @("macro_f1","f1","auroc","ap","accuracy","score","value")
+$metricValueCols = @("macro_f1","macro_f1_opt","f1","auroc","ap","accuracy","score","value")
 $opCols = Get-CsvColumns -csvPath $opPoints
 $hasNamedMetric = $false
 foreach ($c in $metricNameCols + $metricValueCols) { if ($opCols -contains $c) { $hasNamedMetric = $true; break } }
-
 if (-not $hasNamedMetric) {
   $exclude = @("model","seed") + $thresholdCols
   $numeric = Get-NumericColumns -csvPath $opPoints -exclude $exclude
@@ -125,9 +124,12 @@ if (-not $hasNamedMetric) {
 
 Assert-Columns $robustCSV @("model","seed","macro_f1","tag")
 
-# Efficiency: latency tables must have model/device/latency_ms
-Assert-Columns $latGPU @("model","device","latency_ms")
-Assert-Columns $latCPU @("model","device","latency_ms")
+# Efficiency: latency tables must have model + device + a latency column (any of these)
+Assert-Columns $latGPU @("model","device")
+$latCols = @("latency_ms","lat_ms_p50","lat_ms_mean","latency_median_ms","median_ms")
+Assert-AnyColumn $latGPU $latCols "latency column"
+Assert-Columns $latCPU @("model","device")
+Assert-AnyColumn $latCPU $latCols "latency column"
 
 # Memory: params_mib required; peak_cuda_mib optional
 Assert-Columns $memCSV @("model","params_mib")
