@@ -1,0 +1,4 @@
+ckpt,model,seed,device,batch,imgsz,lat_ms_mean,lat_ms_std,lat_ms_p50,lat_ms_p90,lat_ms_p99,throughput_fps
+D:\MedMNIST-EdgeAIv2\models\students\distilled_efficientnetb0_ham10000\seed_0\best.pt,distilled_efficientnetb0_ham10000,seed_0,cpu,1,224,34.92981600080384,0.9527251208773373,34.83585000503808,35.69034003303386,38.579854981508106,28.628836750155997
+D:\MedMNIST-EdgeAIv2\models\students\distilled_mobilenetv2_ham10000\seed_0\best.pt,distilled_mobilenetv2_ham10000,seed_0,cpu,1,224,24.149438498716336,1.2026482436290609,23.76749998074956,25.95014002872631,26.73692700045649,41.40883027376206
+D:\MedMNIST-EdgeAIv2\models\students\distilled_resnet18_ham10000\seed_0\best.pt,distilled_resnet18_ham10000,seed_0,cpu,1,224,23.04620199953206,0.3069487774562543,23.012999969068915,23.322999995434657,24.186682010185898,43.39109758824055

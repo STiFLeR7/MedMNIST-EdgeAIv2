@@ -162,19 +162,21 @@ try {
       throw "Split file not found for robustness: $Seed0Split"
     }
 
-    foreach ($sr in $StudentRootList) {
-      $CkGlob = Glob-StudentCkpts -Root $sr
-      $RobustCSV = Join-Path $TablesRobust "ham10000_corruptions_ci.csv"
-      $RobustFig = Join-Path $FigsRobust  "ham10000_corruption_degradation.pdf"
-      Py -m external_src.robustness.eval_corruptions `
-        --pred-ckpt-glob $CkGlob `
-        --data $DataRoot `
-        --splits $Seed0Split `
-        --levels $CorruptionLevels `
-        --device ($Device) `
-        --out $RobustCSV `
-        --fig $RobustFig
-    }
+    # Build a single semicolon-separated ckpt pattern union and run once
+    $CkptGlobs = @()
+    foreach ($sr in $StudentRootList) { $CkptGlobs += (Glob-StudentCkpts -Root $sr) }
+    $CkptUnion = ($CkptGlobs -join ";")
+
+    $RobustCSV = Join-Path $TablesRobust "ham10000_corruptions_ci.csv"
+    $RobustFig = Join-Path $FigsRobust  "ham10000_corruption_degradation.pdf"
+    Py -m external_src.robustness.eval_corruptions `
+      --pred-ckpt-glob $CkptUnion `
+      --data $DataRoot `
+      --splits $Seed0Split `
+      --levels $CorruptionLevels `
+      --device ($Device) `
+      --out $RobustCSV `
+      --fig $RobustFig
   } else {
     Write-Host "[3/6] Robustness — skipped" -ForegroundColor DarkYellow
   }

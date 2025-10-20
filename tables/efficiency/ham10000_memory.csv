@@ -1,0 +1,4 @@
+ckpt,model,seed,params_bytes,params_mib,peak_cuda_bytes,peak_cuda_mib,imgsz,batch
+D:\MedMNIST-EdgeAIv2\models\students\distilled_efficientnetb0_ham10000\seed_0\best.pt,distilled_efficientnetb0_ham10000,seed_0,16234516,15.482440948486328,26550272,25.3203125,224,1
+D:\MedMNIST-EdgeAIv2\models\students\distilled_mobilenetv2_ham10000\seed_0\best.pt,distilled_mobilenetv2_ham10000,seed_0,9068220,8.648128509521484,19385344,18.4873046875,224,1
+D:\MedMNIST-EdgeAIv2\models\students\distilled_resnet18_ham10000\seed_0\best.pt,distilled_resnet18_ham10000,seed_0,44758972,42.68548202514648,55447552,52.87890625,224,1

@@ -65,18 +65,34 @@ def parse_levels(spec: str):
         out.append((name.strip(), vals))
     return out
 
+# Picklable callables (top-level classes) for Windows spawn + DataLoader workers
+class CorrGaussian:
+    def __init__(self, sigma: float): self.sigma = float(sigma)
+    def __call__(self, im): return gaussian(im, self.sigma)
+
+class CorrJPEG:
+    def __init__(self, quality: int): self.quality = int(quality)
+    def __call__(self, im): return jpeg(im, self.quality)
+
+class CorrContrast:
+    def __init__(self, scale: float): self.scale = float(scale)
+    def __call__(self, im): return contrast(im, self.scale)
+
+class CorrIdentity:
+    def __call__(self, im): return identity(im)
+
 def get_corruption(name: str, val: str):
     if name in ("gauss", "gaussian"):
         v = float(val)
-        return (lambda im: gaussian(im, v)), f"gaussian_{v}"
+        return CorrGaussian(v), f"gaussian_{v}"
     if name == "jpeg":
         v = int(val)
-        return (lambda im: jpeg(im, v)), f"jpeg_{v}"
+        return CorrJPEG(v), f"jpeg_{v}"
     if name == "contrast":
         v = float(val)
-        return (lambda im: contrast(im, v)), f"contrast_{v}"
+        return CorrContrast(v), f"contrast_{v}"
     if name in ("none", "identity"):
-        return identity, "clean"
+        return CorrIdentity(), "clean"
     raise KeyError(name)
 
 
@@ -108,10 +124,8 @@ def load_model(ckpt: Path, device: str) -> torch.nn.Module:
                 f"Export as TorchScript or save full nn.Module."
             )
     m.eval()
-    if device.startswith("cuda") and torch.cuda.is_available():
-        m.to("cuda")
-    else:
-        m.to("cpu")
+    dev = "cuda" if (device.startswith("cuda") and torch.cuda.is_available()) else "cpu"
+    m.to(dev)
     return m
 
 
@@ -126,14 +140,11 @@ def run_eval(ckpt: Path, data_root: Path, split: Path, device: str, batch_size: 
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     ds = HAMDataset(str(data_root), str(split), transform=tfm, corruption=corruption_fn)
-    dl = DataLoader(
-        ds, batch_size=batch_size, shuffle=False, num_workers=4,
-        pin_memory=(device.startswith("cuda") and torch.cuda.is_available())
-    )
+    dev = "cuda" if (device.startswith("cuda") and torch.cuda.is_available()) else "cpu"
+    # num_workers>0 is fine now because corruption_fn is picklable
+    dl = DataLoader(ds, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=(dev == "cuda"))
 
     logits_all, labels_all = [], []
-    dev = "cuda" if (device.startswith("cuda") and torch.cuda.is_available()) else "cpu"
-
     with torch.no_grad():
         for x, y in dl:
             x = x.to(dev, non_blocking=True)
