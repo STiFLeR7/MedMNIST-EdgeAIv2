@@ -494,7 +494,7 @@ def main():
     train_loader, val_loader, test_loader, num_classes, class_weight_tensor, label_map = get_data_loaders(
         args.dataset, Path(args.data_root), args.batch_size, args.num_workers,
         input_size=args.input_size, seed=args.seed,
-        split_manifest_dir=(Path(args.split-manifest-dir) if args.split_manifest_dir else None),
+        split_manifest_dir=(Path(args.split_manifest_dir) if args.split_manifest_dir else None),
         index_parquet=(Path(args.index_parquet) if args.index_parquet else None),
         eval_test=args.eval_test
     )
