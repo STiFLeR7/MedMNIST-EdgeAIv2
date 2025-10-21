@@ -5,7 +5,8 @@ Pretty Phase-1 Report Builder (HAM10000)
 - Ingests DOCX (summaries) + attempts DOCX->PDF append
 - Extracts TensorBoard scalars/images; makes dataset montage
 - Auto-opens PDF in VS Code (if available) and default viewer
-- **New**: Auto-fit tables to page width + wrapping + header repeat + path shortening
+- Auto-fit tables to page width + wrapping + header repeat + path shortening
+- NEW: reads live TensorBoard event files, renders scalar plots, and tabulates last/best values
 #>
 
 param(
@@ -68,9 +69,9 @@ Install-PythonPackages -Pkgs @(
   "tensorboard","matplotlib","Pillow"
 )
 
-# --- Embedded Python (auto-fit tables) ---
+# --- Embedded Python (TB scalars/images + auto-fit tables) ---
 $py = @"
-import os, sys, datetime, math, textwrap
+import os, sys, datetime, math, textwrap, io
 from pathlib import Path
 import pandas as pd, numpy as np
 
@@ -82,6 +83,7 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image as RLImage, LongTable, KeepInFrame
 
 from PyPDF2 import PdfMerger
+from PIL import Image
 
 # TensorBoard
 tb_ok = True
@@ -89,20 +91,6 @@ try:
     from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 except Exception:
     tb_ok = False
-
-from PIL import Image
-
-# DOCX ingestion
-docx2pdf_available = True
-DocxDocument = None
-try:
-    from docx import Document as DocxDocument
-except Exception:
-    pass
-try:
-    from docx2pdf import convert as docx2pdf_convert
-except Exception:
-    docx2pdf_available = False
 
 # Layout constants
 PAGE_W, PAGE_H = A4
@@ -135,12 +123,6 @@ calib_dir = ROOT / 'figs' / 'calibration'
 robust_fig = ROOT / 'figs' / 'robustness' / f'{PREFIX}_corruption_degradation.pdf'
 pareto_fig = ROOT / 'figs' / 'pareto' / f'{PREFIX}_acc_vs_latency.pdf'
 
-def read_csv(p: Path):
-    if p.exists():
-        try: return pd.read_csv(p)
-        except Exception: return None
-    return None
-
 # -------- text/paragraph helpers ----------
 _styles = getSampleStyleSheet()
 def para(txt, size=10, leading=None, bold=False):
@@ -152,7 +134,7 @@ def para(txt, size=10, leading=None, bold=False):
         fontName=('Helvetica-Bold' if bold else 'Helvetica'),
         fontSize=size,
         leading=leading,
-        wordWrap='CJK'  # allows breaking long tokens
+        wordWrap='CJK'
     )
     return Paragraph(txt, style)
 
@@ -161,30 +143,17 @@ def header(txt, lvl=1):
     return para(txt, size=sizes.get(lvl, 11), bold=True, leading=sizes.get(lvl, 11)+2)
 
 def shorten_pathlike(s, keep_parts=3, max_len=60):
-    # Keep tail keep_parts of path-ish strings; prepend ellipsis if longer
     if not isinstance(s, str): return s
     if '\\\\' in s or '/' in s:
         parts = s.replace('/', '\\\\').split('\\\\')
         s2 = '\\\\'.join(parts[-keep_parts:])
-        if len(s2) > max_len:
-            s2 = '…' + s2[-max_len:]
+        if len(s2) > max_len: s2 = '…' + s2[-max_len:]
         return s2
-    if len(s) > max_len:
-        return s[:max_len-1] + '…'
-    return s
+    return (s[:max_len-1] + '…') if len(s) > max_len else s
 
 # -------- table builder with auto-fit ----------
 def mk_table(df, round_spec=None, numeric_cols=None, font_size=8, max_rows=100):
-    """
-    Builds a LongTable that:
-      - wraps text via Paragraph
-      - shortens path-like cells
-      - computes natural column widths and scales to AVAILABLE_W
-      - repeats header row on page breaks
-    """
-    if df is None or df.empty:
-        return para("N/A")
-
+    if df is None or df.empty: return para("N/A")
     dfx = df.copy()
     if round_spec:
         for k, r in round_spec.items():
@@ -193,58 +162,30 @@ def mk_table(df, round_spec=None, numeric_cols=None, font_size=8, max_rows=100):
     if len(dfx) > max_rows:
         dfx = dfx.head(max_rows)
 
-    # Ensure strings and shorten long path-like text
     def fmt_cell(val):
-        if isinstance(val, float) and (np.isnan(val) or np.isinf(val)):
-            return "-"
-        if isinstance(val, (int, float, np.integer, np.floating)):
-            return f"{val}"
+        if isinstance(val, float) and (np.isnan(val) or np.isinf(val)): return "-"
+        if isinstance(val, (int, float, np.integer, np.floating)): return f"{val}"
         return shorten_pathlike(str(val), keep_parts=3, max_len=60)
 
     cols = list(dfx.columns)
-    data_rows = dfx.values.tolist()
-    data_rows = [[fmt_cell(v) for v in row] for row in data_rows]
+    data_rows = [[fmt_cell(v) for v in row] for row in dfx.values.tolist()]
 
-    # Create Paragraph cells for all (wrapping). Numbers stay as strings but wrapped is fine.
-    cell_style = ParagraphStyle(
-        name="Cell",
-        parent=_styles["BodyText"],
-        fontName="Helvetica",
-        fontSize=font_size,
-        leading=font_size+2,
-        wordWrap='CJK'
-    )
-    head_style = ParagraphStyle(
-        name="Head",
-        parent=_styles["BodyText"],
-        fontName="Helvetica-Bold",
-        fontSize=font_size,
-        leading=font_size+2,
-        wordWrap='CJK'
-    )
+    cell_style = ParagraphStyle(name="Cell", parent=_styles["BodyText"], fontName="Helvetica", fontSize=font_size, leading=font_size+2, wordWrap='CJK')
+    head_style = ParagraphStyle(name="Head", parent=_styles["BodyText"], fontName="Helvetica-Bold", fontSize=font_size, leading=font_size+2, wordWrap='CJK')
 
     head = [Paragraph(str(h), head_style) for h in cols]
     body = [[Paragraph(str(c), cell_style) for c in row] for row in data_rows]
     data = [head] + body
 
-    # Estimate column widths from content using stringWidth on the plain strings
-    # then add padding; cap at a min/max and scale to AVAILABLE_W
-    min_w = 30  # pt
-    max_w = 200 # pt before global scaling
-    padd = 10   # pt padding per cell
-
+    min_w = 30; max_w = 200; padd = 10
     raw_widths = []
     for j, col in enumerate(cols):
-        # take header + up to N samples
         samples = [str(col)] + [str(r[j]) for r in data_rows[:50]]
-        w = max(stringWidth(s, "Helvetica-Bold" if j==j else "Helvetica", font_size) + padd for s in samples)
+        w = max(stringWidth(s, "Helvetica", font_size) + padd for s in samples)
         w = max(min_w, min(max_w, w))
         raw_widths.append(w)
-
     total = sum(raw_widths)
-    scale = 1.0
-    if total > AVAILABLE_W:
-        scale = AVAILABLE_W / total
+    scale = 1.0 if total <= AVAILABLE_W else AVAILABLE_W / total
     col_widths = [w*scale for w in raw_widths]
 
     tbl = LongTable(data, colWidths=col_widths, repeatRows=1, hAlign='LEFT')
@@ -260,7 +201,6 @@ def mk_table(df, round_spec=None, numeric_cols=None, font_size=8, max_rows=100):
         ('TOPPADDING',(0,0),(-1,-1),2),
         ('BOTTOMPADDING',(0,0),(-1,-1),2),
     ]))
-    # Keep table within frame if still a tad too big due to rounding
     return KeepInFrame(AVAILABLE_W, PAGE_H - (MARGIN_T+MARGIN_B), content=[tbl], hAlign='LEFT')
 
 def summarize_core(df):
@@ -295,41 +235,63 @@ def build_dataset_montage(root: Path, out_png: Path, n=16, size=128):
         canvas.save(out_png); return out_png if out_png.exists() else None
     except Exception: return None
 
-# --- TensorBoard extraction ---
-def extract_tb_assets(root_runs: Path, out_dir: Path, label_prefix: str):
+# --- TensorBoard extraction (plots + scalar summary) ---
+def extract_tb_assets_and_summary(root_runs: Path, out_dir: Path, label_prefix: str):
     assets = []
-    if not tb_ok: return assets
+    rows = []
+    if not tb_ok: return assets, pd.DataFrame()
     from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
-    for ev in sorted(root_runs.rglob('events.*')):
+    for tbdir in sorted(root_runs.rglob('tb')):
+        # find events.* files under this tb dir
+        events = list(tbdir.glob('events.*'))
+        if not events: 
+            continue
+        # Use the directory as run name (seed_* or run folder)
+        run_name = tbdir.parent.name
         try:
-            ea = EventAccumulator(str(ev), size_guidance={'scalars': 10000, 'tensors': 100, 'images': 50})
+            ea = EventAccumulator(str(tbdir), size_guidance={'scalars': 10000, 'tensors': 100, 'images': 50})
             ea.Reload()
-            run_name = ev.parent.name
-            # Scalars
+            # Scalars → plot + summary
             import matplotlib; matplotlib.use('Agg')
             import matplotlib.pyplot as plt
             scalar_tags = [t for t in ea.Tags().get('scalars', []) if any(k in t.lower() for k in ['loss','acc','f1','auroc','ap','val'])]
             if scalar_tags:
                 plt.figure()
-                for t in sorted(scalar_tags):
+                for t in sorted(set(scalar_tags)):
                     xs = [e.step for e in ea.Scalars(t)]
                     ys = [e.value for e in ea.Scalars(t)]
-                    if xs and ys: plt.plot(xs, ys, label=t)
+                    if xs and ys:
+                        plt.plot(xs, ys, label=t)
+                        # summary row
+                        last = ys[-1]
+                        best = max(ys) if any(k in t.lower() for k in ['acc','f1','auroc','ap']) else min(ys)
+                        best_step = xs[int(np.argmax(ys))] if any(k in t.lower() for k in ['acc','f1','auroc','ap']) else xs[int(np.argmin(ys))]
+                        rows.append({'run': f'{label_prefix}/{run_name}', 'tag': t, 'last': last, 'best': best, 'best_step': best_step})
                 plt.xlabel('step'); plt.ylabel('value'); plt.title(f'{label_prefix} {run_name} — scalars')
                 plt.legend(loc='best', fontsize=6)
-                out_png = out_dir / f'{label_prefix}_{run_name}_scalars.png'
+                out_png = out_dir / f'{label_prefix}_{run_name}_scalars_from_tb.png'
                 plt.savefig(out_png, bbox_inches='tight', dpi=150); plt.close()
                 if out_png.exists(): assets.append(out_png)
-            # Images
-            for t in ea.Tags().get('images', [])[:3]:
+            # Images stored in TB
+            for t in ea.Tags().get('images', [])[:6]:
                 ims = ea.Images(t)
                 if ims:
-                    arr = ims[0].encoded_image_string
-                    out_png = out_dir / f'{label_prefix}_{run_name}_{t.replace("/","_")}.png'
-                    with open(out_png, 'wb') as f: f.write(arr)
+                    arr = ims[-1].encoded_image_string
+                    img = Image.open(io.BytesIO(arr)).convert('RGB')
+                    out_png = out_dir / f'{label_prefix}_{run_name}_{t.replace("/","_")}_from_tb.png'
+                    img.save(out_png)
                     if out_png.exists(): assets.append(out_png)
-        except Exception: pass
-    return assets
+        except Exception:
+            pass
+    df = pd.DataFrame(rows)
+    return assets, df
+
+# --- read CSVs ---
+def read_csv_safe(p): 
+    try: 
+        return pd.read_csv(p) if p.exists() else None
+    except Exception: 
+        return None
 
 def build_main_pdf():
     story = []
@@ -340,7 +302,7 @@ def build_main_pdf():
         para(f'Generated: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'),
         para(f'Repository root: {ROOT}'),
         Spacer(1, 0.5*cm),
-        para('This report consolidates teacher/student performance, calibration, operating points, robustness under corruptions, and efficiency (latency/memory). TensorBoard curves/images, dataset montage, and supplementary documents are embedded.', size=10),
+        para('This report consolidates teacher/student performance, calibration, operating points, robustness under corruptions, and efficiency (latency/memory). It now also embeds TensorBoard scalar plots and a scalar summary table pulled from your .tfevents.', size=10),
         PageBreak()
     ]
     # Roles
@@ -357,11 +319,6 @@ def build_main_pdf():
     story += [PageBreak()]
 
     # Load CSVs
-    def read_csv_safe(p): 
-        try: 
-            return pd.read_csv(p) if p.exists() else None
-        except Exception: 
-            return None
     df_teacher  = read_csv_safe(core_teacher)
     df_students = read_csv_safe(core_students)
     df_cal      = read_csv_safe(cal_metrics)
@@ -412,15 +369,39 @@ def build_main_pdf():
     story += [para('See appended figure: Acc-vs-Latency bubble plot.')]
 
     # TensorBoard
-    story += [PageBreak(), header('7. TensorBoard Curves & Images', 2)]
-    tb_assets = []
-    tb_assets += extract_tb_assets(ROOT / 'models' / 'teachers', TMP_DIR, 'teacher')
-    tb_assets += extract_tb_assets(ROOT / 'models' / 'students', TMP_DIR, 'student')
-    if tb_assets:
-        for p in tb_assets:
+    story += [PageBreak(), header('7. TensorBoard Scalars & Images', 2)]
+    tb_assets_all = []
+    tb_summary_frames = []
+
+    # pull teacher TB
+    if tb_ok:
+        assets, df_sum = extract_tb_assets_and_summary(ROOT / 'models' / 'teachers', TMP_DIR, 'teacher')
+        tb_assets_all += assets
+        if df_sum is not None and not df_sum.empty: tb_summary_frames.append(df_sum)
+        # pull students TB
+        assets, df_sum = extract_tb_assets_and_summary(ROOT / 'models' / 'students', TMP_DIR, 'student')
+        tb_assets_all += assets
+        if df_sum is not None and not df_sum.empty: tb_summary_frames.append(df_sum)
+
+    if tb_summary_frames:
+        df_tb = pd.concat(tb_summary_frames, ignore_index=True)
+        # round and sort
+        for c in ['last','best']:
+            if c in df_tb.columns:
+                df_tb[c] = pd.to_numeric(df_tb[c], errors='coerce').round(4)
+        df_tb = df_tb.sort_values(['run','tag'])
+        story += [para('TensorBoard scalar summary (last/best values):'),
+                  mk_table(df_tb, round_spec={'last':4,'best':4}, font_size=8, max_rows=500),
+                  Spacer(1,0.2*cm)]
+    else:
+        story += [para('No TensorBoard scalars found. Run scripts/make_tb_events.ps1 to synthesize or log events from training.')]
+
+    if tb_assets_all:
+        story += [para('TensorBoard plots/images:')]
+        for p in tb_assets_all:
             story += [RLImage(str(p), width=15*cm, height=9*cm), Spacer(1,0.2*cm)]
     else:
-        story += [para('No TensorBoard event assets found or TensorBoard parser unavailable.')]
+        story += [para('No TensorBoard images detected.')]
 
     # DOCX summaries
     story += [PageBreak(), header('8. Supplementary Notes from DOCX', 2)]
@@ -428,23 +409,18 @@ def build_main_pdf():
     if not docx_files:
         story += [para('No .docx files found in the supplementary folder.')]
     else:
+        from docx import Document as DocxDocument
         for p in docx_files:
             story += [header(f'- {p.name}', 3)]
-            txt = None
             try:
-                if DocxDocument is not None:
-                    d = DocxDocument(str(p))
-                    paras = [q.text.strip() for q in d.paragraphs if q.text.strip()]
-                    text = '\n'.join(paras)
-                    if len(text) > 4000: text = text[:4000] + ' ... [truncated]'
-                    txt = text
-            except Exception:
-                pass
-            if txt:
-                for chunk in textwrap.wrap(txt, width=120):
+                d = DocxDocument(str(p))
+                paras = [q.text.strip() for q in d.paragraphs if q.text.strip()]
+                text = '\n'.join(paras)
+                if len(text) > 4000: text = text[:4000] + ' ... [truncated]'
+                for chunk in textwrap.wrap(text, width=120):
                     story += [para(chunk, size=9)]
                 story += [Spacer(1,0.3*cm)]
-            else:
+            except Exception:
                 story += [para('(Could not extract text.)')]
 
     # Build main report
@@ -462,14 +438,18 @@ def append_fig_pdfs():
 
 def convert_and_append_docx_pdfs():
     if not DOCSDIR.exists(): return
+    try:
+        from docx2pdf import convert as docx2pdf_convert
+    except Exception:
+        return
     for docx in sorted(DOCSDIR.glob('*.docx')):
         out_pdf = OUTPDF.with_name(OUTPDF.stem + f'__{docx.stem}.pdf')
-        if docx2pdf_available:
-            try:
-                out_pdf.parent.mkdir(parents=True, exist_ok=True)
-                docx2pdf_convert(str(docx), str(out_pdf))
-                if out_pdf.exists(): APPEND_LIST.append(out_pdf)
-            except Exception: pass
+        try:
+            out_pdf.parent.mkdir(parents=True, exist_ok=True)
+            docx2pdf_convert(str(docx), str(out_pdf))
+            if out_pdf.exists(): APPEND_LIST.append(out_pdf)
+        except Exception:
+            pass
 
 def merge_all():
     merger = PdfMerger()
