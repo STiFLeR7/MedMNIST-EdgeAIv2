@@ -1,0 +1,2 @@
+arch,param_bytes,param_mib,img_size,batch,peak_cuda_mib
+resnet18,44714256,42.64283752441406,224,1,62.09375

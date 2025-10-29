@@ -2,19 +2,19 @@
 r"""
 KD + Attention Transfer training script (Phase-2: OCT2017)
 Teacher: ResNet50 (ckpt from your teacher run)
-Student: EfficientNet-B0 (initialized from local ImageNet weights; no downloads)
+Student: ResNet18 (initialized from local ImageNet weights; no downloads)
 
 Usage (PowerShell):
 python -m external_src.students.train_student_kd `
   --dataset OCT2017 `
   --data-root .\data `
   --teacher-ckpt .\models\teachers\oct2017_resnet50_seed0\ckpt-best.pth `
-  --save-dir .\models\students\oct2017_effb0_kdat_seed0 `
-  --student-init .\models\students\efficientnet_b0_rwightman-3dd342df.pth `
+  --save-dir .\models\students\oct2017_resnet18_kdat_seed0 `
+  --student-init .\models\students\resnet18-f37072fd.pth `
   --epochs 40 `
-  --batch-size 16 `
-  --accum-steps 2 `
-  --lr 2e-4 `
+  --batch-size 32 `
+  --accum-steps 1 `
+  --lr 3e-4 `
   --weight-decay 5e-2 `
   --seed 0 `
   --eval-test `
@@ -68,13 +68,11 @@ def make_teacher_resnet50(num_classes: int) -> nn.Module:
 
 def _load_local_state_dict(p: Path) -> dict:
     sd = torch.load(p, map_location="cpu")
-    # Accept a few common wrappers
     if isinstance(sd, dict):
         if "state_dict" in sd and isinstance(sd["state_dict"], dict):
             sd = sd["state_dict"]
         elif "model" in sd and isinstance(sd["model"], dict):
             sd = sd["model"]
-    # Remove DistributedDataParallel prefix if present
     new_sd = {}
     for k, v in sd.items():
         if k.startswith("module."):
@@ -83,31 +81,29 @@ def _load_local_state_dict(p: Path) -> dict:
             new_sd[k] = v
     return new_sd
 
-def make_student_efficientnetb0(num_classes: int, init_path: Path) -> nn.Module:
+def make_student_resnet18(num_classes: int, init_path: Path) -> nn.Module:
     """
-    Build torchvision EfficientNet-B0 and initialize from a **local** ImageNet-1K checkpoint.
-    The file `efficientnet_b0_rwightman-3dd342df.pth` matches torchvision's keying;
-    we drop classifier weights and load the rest with strict=False.
+    Build torchvision ResNet18 and initialize from a **local** ImageNet-1K checkpoint.
+    File: resnet18-f37072fd.pth (official torchvision weights dict).
+    We drop final FC weights (1000-class) and load the rest with strict=False.
     """
-    m = models.efficientnet_b0(weights=None)
-    # Replace classifier head *before* loading to avoid size mismatch
-    in_f = m.classifier[-1].in_features
-    m.classifier[-1] = nn.Linear(in_f, num_classes)
+    m = models.resnet18(weights=None)
+    in_f = m.fc.in_features
+    m.fc = nn.Linear(in_f, num_classes)
 
     if init_path is None:
-        raise FileNotFoundError("Missing --student-init path for EfficientNet-B0 weights.")
+        raise FileNotFoundError("Missing --student-init path for ResNet18 weights.")
     init_path = Path(init_path)
     if not init_path.exists():
         raise FileNotFoundError(f"Student init weights not found: {init_path}")
 
     sd = _load_local_state_dict(init_path)
 
-    # Drop classifier weights from the ImageNet checkpoint (1000-class)
+    # Drop classifier weights from ImageNet checkpoint (1000-class)
     for k in list(sd.keys()):
-        if k.startswith("classifier.1.") or k.startswith("classifier.fc.") or k in {"classifier.weight","classifier.bias"}:
+        if k.startswith("fc.") or k in {"fc.weight", "fc.bias"}:
             sd.pop(k, None)
 
-    # Load backbone weights only
     m.load_state_dict(sd, strict=False)
     return m
 
@@ -130,7 +126,7 @@ def register_feature_hooks(model: nn.Module, layers: List[str]) -> Dict[str, _Fe
             for k in named:
                 if k.endswith(lname) or lname.endswith(k):
                     target = named[k]; break
-        if target is None:  # skip silently
+        if target is None:
             continue
         hk = _FeatHook(lname)
         target.register_forward_hook(hk)
@@ -163,9 +159,9 @@ def at_loss(student_feats, teacher_feats) -> torch.Tensor:
     return loss / n
 
 def kd_loss(student_logits: torch.Tensor, teacher_logits: torch.Tensor, T: float) -> torch.Tensor:
-    log_p = F.log_softmax(student_logits / T, dim=1)
-    q = F.softmax(teacher_logits / T, dim=1)
-    return F.kl_div(log_p, q, reduction="batchmean") * (T * T)
+    log_p = torch.nn.functional.log_softmax(student_logits / T, dim=1)
+    q = torch.nn.functional.softmax(teacher_logits / T, dim=1)
+    return torch.nn.functional.kl_div(log_p, q, reduction="batchmean") * (T * T)
 
 
 # -------------------------
@@ -234,13 +230,13 @@ def main():
     ap.add_argument("--data-root", default="data")
     ap.add_argument("--teacher-ckpt", required=True)
     ap.add_argument("--save-dir", required=True)
-    ap.add_argument("--student-init", type=str, default="models/students/efficientnet_b0_rwightman-3dd342df.pth",
-                    help="Local EfficientNet-B0 ImageNet weights .pth (no download).")
+    ap.add_argument("--student-init", type=str, default="models/students/resnet18-f37072fd.pth",
+                    help="Local ResNet18 ImageNet weights .pth (no download).")
 
     ap.add_argument("--epochs", type=int, default=40)
-    ap.add_argument("--batch-size", type=int, default=16)
-    ap.add_argument("--accum-steps", type=int, default=2)
-    ap.add_argument("--lr", type=float, default=2e-4)
+    ap.add_argument("--batch-size", type=int, default=32)
+    ap.add_argument("--accum-steps", type=int, default=1)
+    ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--weight-decay", type=float, default=5e-2)
     ap.add_argument("--num-workers", type=int, default=4)
     ap.add_argument("--input-size", type=int, default=224)
@@ -296,7 +292,7 @@ def main():
     teacher = teacher.to(device).eval()
     for p in teacher.parameters(): p.requires_grad = False
 
-    student = make_student_efficientnetb0(num_classes, init_path=Path(args.student_init)).to(device)
+    student = make_student_resnet18(num_classes, init_path=Path(args.student_init)).to(device)
 
     # ------------ Loss / Optim ------------
     ce_weight = class_w.to(device) if class_w is not None else None
@@ -304,10 +300,10 @@ def main():
     optimizer = torch.optim.AdamW(student.parameters(), lr=args.lr, weight_decay=args.weight_decay, betas=(0.9, 0.999))
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
 
-    # EfficientNet-B0 taps (coarse pyramid). Teacher taps are resnet stages on OCT; on HAM we mirror student taps.
-    at_layers_student = ["features.2", "features.4", "features.6", "features.8"]
+    # ResNet taps (student & teacher are stage-aligned)
+    at_layers_student = ["layer1", "layer2", "layer3", "layer4"]
     s_hooks = register_feature_hooks(student, at_layers_student)
-    t_hooks = register_feature_hooks(teacher, ["layer1", "layer2", "layer3", "layer4"]) if args.dataset.upper() == "OCT2017" else register_feature_hooks(teacher, at_layers_student)
+    t_hooks = register_feature_hooks(teacher, ["layer1", "layer2", "layer3", "layer4"])
 
     best_val_acc = 0.0
     traj = {"epochs": []}
@@ -359,7 +355,7 @@ def main():
             print("Dry run: stopping after 1 epoch"); break
 
     # Optional test pass
-    final = {"best_val_acc": float(best_val_acc), "epochs": len(traj["epochs"])}
+    final = {"best_val_acc": float(best_val_acc), "epochs": len(traj["epochs"]) }
     if args.eval_test and test_loader is not None:
         te_loss, te_acc = eval_epoch(student, test_loader, ce, device, args.amp, desc="test")
         print(f"[TEST] loss={te_loss:.4f} acc={te_acc:.4f}")
