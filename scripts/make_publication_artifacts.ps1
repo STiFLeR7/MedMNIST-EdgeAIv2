@@ -10,15 +10,44 @@ param(
 $ErrorActionPreference = "Stop"
 $PY = "python"
 
+# -------------------------
 # Datasets & model tags
+# -------------------------
 $Datasets = @("ham10000","medmnist","isic")
-$Students = @("resnet18","mbv2","effb0")
-$Teacher = "resnet50"
+$Students = @("resnet18","mbv2","effb0")   # keep CLI tags consistent with tools
+$Teacher  = "resnet50"
 
-# 0) Ensure dirs
-New-Item -ItemType Directory -Force -Path $OutFigs,$OutTables | Out-Null
+# -------------------------
+# Utilities
+# -------------------------
+function Ensure-Dir([string]$p) {
+  if (-not (Test-Path $p)) { New-Item -ItemType Directory -Force -Path $p | Out-Null }
+}
 
-# 0.1) Ensure predictions exist (creates test_predictions.npz if missing)
+function Copy-WithPrefix {
+  param(
+    [string]$SourceDir,
+    [string]$Pattern,
+    [string]$DestDir,
+    [string]$Prefix
+  )
+  if (-not (Test-Path $SourceDir)) { return }
+  Ensure-Dir $DestDir
+  Get-ChildItem -Path $SourceDir -Filter $Pattern -File -Recurse | ForEach-Object {
+    $dest = Join-Path $DestDir ($Prefix + $_.Name)
+    Copy-Item $_.FullName $dest -Force
+  }
+}
+
+# -------------------------
+# 0) Ensure output dirs
+# -------------------------
+Ensure-Dir $OutFigs
+Ensure-Dir $OutTables
+
+# -------------------------
+# 0.1) Export predictions if missing
+# -------------------------
 foreach ($ds in $Datasets) {
   foreach ($m in @($Teacher) + $Students) {
     & $PY ".\tools\export_predictions.py" `
@@ -30,7 +59,16 @@ foreach ($ds in $Datasets) {
   }
 }
 
-# 1) Per-class metrics, confusion matrices, PR/F1 tables
+# -------------------------
+# 0.2) Backfill ablation records from models/ (so ablate_kd has material)
+# -------------------------
+if (Test-Path ".\tools\backfill_ablation_from_modelsdir.py") {
+  & $PY ".\tools\backfill_ablation_from_modelsdir.py"
+}
+
+# -------------------------
+# 1) Per-class metrics (tables + confusion + PR)
+# -------------------------
 foreach ($ds in $Datasets) {
   & $PY ".\tools\perclass_metrics.py" `
     --dataset $ds `
@@ -41,9 +79,11 @@ foreach ($ds in $Datasets) {
     --save-latex
 }
 
+# -------------------------
 # 2) Ablations (α, τ, β) aggregation + plots
+# -------------------------
 $rebuildFlag = @()
-if ($RebuildAblations) { $rebuildFlag = @("--rebuild") }  # <-- correct boolean switch
+if ($RebuildAblations) { $rebuildFlag = @("--rebuild") }
 
 & $PY ".\tools\ablate_kd.py" `
   --datasets "$($Datasets -join ',')" `
@@ -52,7 +92,10 @@ if ($RebuildAblations) { $rebuildFlag = @("--rebuild") }  # <-- correct boolean 
   --out-tables "$OutTables" `
   @rebuildFlag
 
-# 3) Efficiency table (Params/FLOPs/Latency/RAM)
+# -------------------------
+# 3) Efficiency profiling (Params / FLOPs / Latency / RAM)
+#     Uses the CLI tool you wired to THOP-safe logic.
+# -------------------------
 & $PY ".\tools\efficiency_profile.py" `
   --dataset-list "$($Datasets -join ',')" `
   --models "$Teacher,$($Students -join ',')" `
@@ -62,7 +105,10 @@ if ($RebuildAblations) { $rebuildFlag = @("--rebuild") }  # <-- correct boolean 
   --out-tables "$OutTables" `
   --out-figs "$OutFigs"
 
+# -------------------------
 # 4) Clinical interpretability (Grad-CAM)
+#    NB: tools/gradcam_viz.py must be THOP-safe (we updated logic in the notebook).
+# -------------------------
 foreach ($ds in $Datasets) {
   & $PY ".\tools\gradcam_viz.py" `
      --dataset $ds `
@@ -74,7 +120,10 @@ foreach ($ds in $Datasets) {
      --out-figs "$OutFigs"
 }
 
-# 5) Optional: t-SNE teacher vs students
+# -------------------------
+# 5) t-SNE (teacher vs students), Procrustes-aligned
+#    NB: tools/tsne_features.py should deep-copy + strip THOP as in notebook.
+# -------------------------
 foreach ($ds in $Datasets) {
   & $PY ".\tools\tsne_features.py" `
     --dataset $ds `
@@ -86,4 +135,51 @@ foreach ($ds in $Datasets) {
     --out-figs "$OutFigs" `
     --out-tables "$OutTables"
 }
-Write-Host "✅ Publication artifacts generated under $OutFigs and $OutTables."
+
+# -------------------------
+# 6) Consolidate artifacts with dataset-prefixed filenames
+#    (Avoid name collisions across datasets)
+# -------------------------
+# Figures to consolidate
+$FigPatterns = @(
+  "*_confmat.png", "*_pr_curves.png", "*gradcam_panel.png",
+  "tsne_teacher_vs_*.png", "ablation_*.*", "efficiency_*.*"
+)
+
+# Tables to consolidate
+$TablePatterns = @(
+  "*perclass_metrics.csv", "*perclass_metrics.tex",
+  "efficiency_*.csv", "efficiency_*.tex",
+  "ablation_*.*"
+)
+
+# Per-dataset subdirs (in case tools saved under dataset-nested dirs)
+$PerDsFigDir = @{
+  "ham10000" = ".\figs\ham10000"
+  "medmnist" = ".\figs\medmnist"
+  "isic"     = ".\figs\isic"
+}
+$PerDsTabDir = @{
+  "ham10000" = ".\tables\ham10000"
+  "medmnist" = ".\tables\medmnist"
+  "isic"     = ".\tables\isic"
+}
+
+foreach ($ds in $Datasets) {
+  $prefix = "$ds`_"
+  # Copy figures from per-dataset subdir (if exists)
+  if ($PerDsFigDir.ContainsKey($ds)) {
+    foreach ($pat in $FigPatterns) { Copy-WithPrefix -SourceDir $PerDsFigDir[$ds] -Pattern $pat -DestDir $OutFigs -Prefix $prefix }
+  }
+  # Copy figures from root figs (if some tools wrote directly under $OutFigs)
+  foreach ($pat in $FigPatterns) { Copy-WithPrefix -SourceDir $OutFigs -Pattern $pat -DestDir $OutFigs -Prefix $prefix }
+
+  # Copy tables from per-dataset subdir (if exists)
+  if ($PerDsTabDir.ContainsKey($ds)) {
+    foreach ($pat in $TablePatterns) { Copy-WithPrefix -SourceDir $PerDsTabDir[$ds] -Pattern $pat -DestDir $OutTables -Prefix $prefix }
+  }
+  # Copy tables from root tables (if some tools wrote directly under $OutTables)
+  foreach ($pat in $TablePatterns) { Copy-WithPrefix -SourceDir $OutTables -Pattern $pat -DestDir $OutTables -Prefix $prefix }
+}
+
+Write-Host "✅ Publication artifacts generated and consolidated under $OutFigs and $OutTables."

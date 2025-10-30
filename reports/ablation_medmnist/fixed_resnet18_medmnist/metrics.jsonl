@@ -1,0 +1,1 @@
+{"epoch": 0, "macro_f1": 0.11833524842960222, "ece": 0.2569998502731323, "alpha": 0.5, "tau": 4.0, "beta": 0.0, "student": "resnet18", "dataset": "medmnist"}

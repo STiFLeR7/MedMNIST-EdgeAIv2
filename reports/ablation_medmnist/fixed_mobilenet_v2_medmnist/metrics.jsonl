@@ -1,0 +1,1 @@
+{"epoch": 0, "macro_f1": 0.11450772777730338, "ece": 0.34352219104766846, "alpha": 0.5, "tau": 4.0, "beta": 0.0, "student": "mobilenet_v2", "dataset": "medmnist"}
