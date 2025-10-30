@@ -1,0 +1,4 @@
+alpha,tau,beta,path,acc,macro_f1,ece,lat_ms
+,,,.\reports\phase3_isic\student_effb0_isic,,,,
+,,,.\reports\phase3_isic\student_mbv2_isic,,,,
+,,,.\reports\phase3_isic\student_resnet18_isic,,,,

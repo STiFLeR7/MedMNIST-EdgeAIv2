@@ -1,0 +1,2 @@
+{"epoch": 0, "macro_f1": 0.0, "ece": NaN, "alpha": 0.5, "tau": 2017.0, "beta": 0.5, "student": "resnet18", "dataset": "oct2017", "source": "models/students\\oct2017_resnet18_kdat_seed0\\metrics.json"}
+{"epoch": 0, "macro_f1": 0.0, "ece": NaN, "alpha": 0.5, "tau": 2017.0, "beta": 0.5, "student": "resnet18", "dataset": "oct2017", "source": "models/students\\oct2017_resnet18_kdat_seed0\\final_summary.json"}

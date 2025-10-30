@@ -1,0 +1,6 @@
+{"epoch": 0, "macro_f1": 0.6258140116573121, "ece": NaN, "alpha": 0.5, "tau": 4.0, "beta": 0.0, "student": "effb0", "dataset": "ham10000", "source": "models/students\\distilled_efficientnetb0_ham10000\\eval\\metrics.json"}
+{"epoch": 0, "macro_f1": 0.5623455866552588, "ece": NaN, "alpha": 0.5, "tau": 4.0, "beta": 0.0, "student": "mbv2", "dataset": "ham10000", "source": "models/students\\distilled_mobilenetv2_ham10000\\eval\\metrics.json"}
+{"epoch": 0, "macro_f1": 0.7104760696107834, "ece": NaN, "alpha": 0.5, "tau": 18.0, "beta": 0.0, "student": "resnet18", "dataset": "ham10000", "source": "models/students\\distilled_resnet18_ham10000\\eval\\metrics.json"}
+{"epoch": 0, "macro_f1": 0.6258140116573121, "ece": NaN, "alpha": 0.5, "tau": 4.0, "beta": 0.0, "student": "effb0", "dataset": "ham10000", "source": "models/students\\distilled_efficientnetb0_ham10000\\eval\\metrics.json"}
+{"epoch": 0, "macro_f1": 0.5623455866552588, "ece": NaN, "alpha": 0.5, "tau": 4.0, "beta": 0.0, "student": "mbv2", "dataset": "ham10000", "source": "models/students\\distilled_mobilenetv2_ham10000\\eval\\metrics.json"}
+{"epoch": 0, "macro_f1": 0.7104760696107834, "ece": NaN, "alpha": 0.5, "tau": 18.0, "beta": 0.0, "student": "resnet18", "dataset": "ham10000", "source": "models/students\\distilled_resnet18_ham10000\\eval\\metrics.json"}
