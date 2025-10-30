@@ -1,0 +1,2 @@
+arch,param_bytes,param_mib,img_size,batch,peak_cuda_mib
+mobilenet_v2,8941604,8.52737808227539,224,1,28.3876953125

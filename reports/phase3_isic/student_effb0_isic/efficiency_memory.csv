@@ -1,0 +1,2 @@
+arch,param_bytes,param_mib,img_size,batch,peak_cuda_mib
+efficientnet_b0,16076308,15.331562042236328,224,1,35.220703125

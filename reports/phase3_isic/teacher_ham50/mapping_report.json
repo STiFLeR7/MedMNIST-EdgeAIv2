@@ -1,0 +1,33 @@
+{
+  "isic_classes": [
+    "actinic keratosis",
+    "basal cell carcinoma",
+    "dermatofibroma",
+    "melanoma",
+    "nevus",
+    "pigmented benign keratosis",
+    "seborrheic keratosis",
+    "squamous cell carcinoma",
+    "vascular lesion"
+  ],
+  "used": [
+    [
+      "melanoma",
+      4
+    ]
+  ],
+  "skipped": [
+    "actinic keratosis",
+    "basal cell carcinoma",
+    "dermatofibroma",
+    "nevus",
+    "pigmented benign keratosis",
+    "seborrheic keratosis",
+    "squamous cell carcinoma",
+    "vascular lesion"
+  ],
+  "special_binary": [
+    "melanoma_vs_rest",
+    4
+  ]
+}
