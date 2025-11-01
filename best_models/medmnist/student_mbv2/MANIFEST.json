@@ -1,0 +1,10 @@
+{
+  "dataset": "medmnist",
+  "model_key": "student_mbv2",
+  "role": "student",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "eval_dir": ".\\best_models\\medmnist\\student_mbv2\\eval",
+  "efficiency_dir": ".\\best_models\\medmnist\\student_mbv2\\efficiency",
+  "report": null
+}

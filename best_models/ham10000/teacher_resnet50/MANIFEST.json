@@ -1,0 +1,10 @@
+{
+  "dataset": "ham10000",
+  "model_key": "teacher_resnet50",
+  "role": "teacher",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "eval_dir": ".\\best_models\\ham10000\\teacher_resnet50\\eval",
+  "efficiency_dir": null,
+  "report": null
+}

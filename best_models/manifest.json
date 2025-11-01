@@ -1,0 +1,125 @@
+{
+  "root": "D:\\MedMNIST-EdgeAIv2\\best_models",
+  "entries": [
+    {
+      "dataset": "ham10000",
+      "model_key": "teacher_resnet50",
+      "role": "teacher",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\ham10000\\teacher_resnet50\\eval",
+      "efficiency_dir": null,
+      "report": null
+    },
+    {
+      "dataset": "ham10000",
+      "model_key": "student_resnet18",
+      "role": "student",
+      "checkpoint": ".\\best_models\\ham10000\\student_resnet18\\ckpt\\ckpt-best.pth",
+      "checkpoint_sha256": "72b82705b94fc9033620ac1af90ab1a5d0931e97e08afb5bec334034710b189c",
+      "eval_dir": ".\\best_models\\ham10000\\student_resnet18\\eval",
+      "efficiency_dir": null,
+      "report": null
+    },
+    {
+      "dataset": "ham10000",
+      "model_key": "student_mbv2",
+      "role": "student",
+      "checkpoint": ".\\best_models\\ham10000\\student_mbv2\\ckpt\\ckpt-best.pth",
+      "checkpoint_sha256": "501e432c4cd75945a7cd3c5d7485f19bb46de10b2d6c9521ac36b5068b97e795",
+      "eval_dir": ".\\best_models\\ham10000\\student_mbv2\\eval",
+      "efficiency_dir": null,
+      "report": null
+    },
+    {
+      "dataset": "ham10000",
+      "model_key": "student_effb0",
+      "role": "student",
+      "checkpoint": ".\\best_models\\ham10000\\student_effb0\\ckpt\\ckpt-best.pth",
+      "checkpoint_sha256": "d89471b66de0c8b9990bc4752e6f666ec325e6835886a9b52a748340ecca0331",
+      "eval_dir": ".\\best_models\\ham10000\\student_effb0\\eval",
+      "efficiency_dir": null,
+      "report": null
+    },
+    {
+      "dataset": "medmnist",
+      "model_key": "teacher_resnet50",
+      "role": "teacher",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\medmnist\\teacher_resnet50\\eval",
+      "efficiency_dir": ".\\best_models\\medmnist\\teacher_resnet50\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "medmnist",
+      "model_key": "student_resnet18",
+      "role": "student",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\medmnist\\student_resnet18\\eval",
+      "efficiency_dir": ".\\best_models\\medmnist\\student_resnet18\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "medmnist",
+      "model_key": "student_mbv2",
+      "role": "student",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\medmnist\\student_mbv2\\eval",
+      "efficiency_dir": ".\\best_models\\medmnist\\student_mbv2\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "medmnist",
+      "model_key": "student_effb0",
+      "role": "student",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\medmnist\\student_effb0\\eval",
+      "efficiency_dir": ".\\best_models\\medmnist\\student_effb0\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "isic",
+      "model_key": "teacher_resnet50",
+      "role": "teacher",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\isic\\teacher_resnet50\\eval",
+      "efficiency_dir": ".\\best_models\\isic\\teacher_resnet50\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "isic",
+      "model_key": "student_resnet18",
+      "role": "student",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\isic\\student_resnet18\\eval",
+      "efficiency_dir": ".\\best_models\\isic\\student_resnet18\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "isic",
+      "model_key": "student_mbv2",
+      "role": "student",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\isic\\student_mbv2\\eval",
+      "efficiency_dir": ".\\best_models\\isic\\student_mbv2\\efficiency",
+      "report": null
+    },
+    {
+      "dataset": "isic",
+      "model_key": "student_effb0",
+      "role": "student",
+      "checkpoint": null,
+      "checkpoint_sha256": null,
+      "eval_dir": ".\\best_models\\isic\\student_effb0\\eval",
+      "efficiency_dir": ".\\best_models\\isic\\student_effb0\\efficiency",
+      "report": null
+    }
+  ]
+}

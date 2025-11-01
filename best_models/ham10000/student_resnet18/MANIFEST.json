@@ -1,0 +1,10 @@
+{
+  "dataset": "ham10000",
+  "model_key": "student_resnet18",
+  "role": "student",
+  "checkpoint": ".\\best_models\\ham10000\\student_resnet18\\ckpt\\ckpt-best.pth",
+  "checkpoint_sha256": "72b82705b94fc9033620ac1af90ab1a5d0931e97e08afb5bec334034710b189c",
+  "eval_dir": ".\\best_models\\ham10000\\student_resnet18\\eval",
+  "efficiency_dir": null,
+  "report": null
+}

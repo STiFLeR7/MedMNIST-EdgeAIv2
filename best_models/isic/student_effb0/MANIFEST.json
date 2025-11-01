@@ -1,0 +1,10 @@
+{
+  "dataset": "isic",
+  "model_key": "student_effb0",
+  "role": "student",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "eval_dir": ".\\best_models\\isic\\student_effb0\\eval",
+  "efficiency_dir": ".\\best_models\\isic\\student_effb0\\efficiency",
+  "report": null
+}

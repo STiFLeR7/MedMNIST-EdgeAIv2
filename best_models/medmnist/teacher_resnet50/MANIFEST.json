@@ -1,0 +1,10 @@
+{
+  "dataset": "medmnist",
+  "model_key": "teacher_resnet50",
+  "role": "teacher",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "eval_dir": ".\\best_models\\medmnist\\teacher_resnet50\\eval",
+  "efficiency_dir": ".\\best_models\\medmnist\\teacher_resnet50\\efficiency",
+  "report": null
+}
