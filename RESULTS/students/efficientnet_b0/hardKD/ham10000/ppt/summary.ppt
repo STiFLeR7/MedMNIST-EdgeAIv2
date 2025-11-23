@@ -1,0 +1,1 @@
+HAM10000 | arch=efficientnet_b0 | abl a=0.8,tau=2.0,beta=0.0 | best_val=0.7455089820359282 | test_acc=0.7155688622754491

@@ -1,0 +1,66 @@
+[2025-11-18 09:48:10] START run dataset=oct2017 arch=efficientnet_b0 alpha=0.6 tau=4.0 beta=1500.0 img=192 bs=64 workers=0
+[2025-11-18 09:51:00] Loaded student init: /kaggle/input/medmnist-efficientnetb0/pytorch/default/1/efficientnet_b0.pth
+[2025-11-18 09:51:02] Loaded teacher ckpt: /kaggle/input/oct2017-resnet50/pytorch/default/1/ckpt-best.pth
+[2025-11-18 09:51:02] EPOCH 0 start
+[2025-11-18 10:05:37] EPOCH 0 end train_loss=2.7345 val_acc=0.4442467378410439
+[2025-11-18 10:05:37] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/ATstrong/oct2017/models/ckpt-best_oct2017_efficientnet_b0_student_kd.pth
+[2025-11-18 10:05:37] EPOCH 1 start
+[2025-11-18 10:12:35] EPOCH 1 end train_loss=2.2910 val_acc=nan
+[2025-11-18 10:12:35] EPOCH 2 start
+[2025-11-18 10:19:49] EPOCH 2 end train_loss=2.1930 val_acc=0.444642151047845
+[2025-11-18 10:19:49] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/ATstrong/oct2017/models/ckpt-best_oct2017_efficientnet_b0_student_kd.pth
+[2025-11-18 10:19:49] EPOCH 3 start
+[2025-11-18 10:26:33] EPOCH 3 end train_loss=2.1502 val_acc=nan
+[2025-11-18 10:26:33] EPOCH 4 start
+[2025-11-18 10:33:48] EPOCH 4 end train_loss=2.1174 val_acc=0.44365361803084225
+[2025-11-18 10:33:48] EPOCH 5 start
+[2025-11-18 10:40:28] EPOCH 5 end train_loss=2.0939 val_acc=nan
+[2025-11-18 10:40:28] EPOCH 6 start
+[2025-11-18 10:47:52] EPOCH 6 end train_loss=2.0767 val_acc=0.44365361803084225
+[2025-11-18 10:47:52] EPOCH 7 start
+[2025-11-18 10:54:42] EPOCH 7 end train_loss=2.0633 val_acc=nan
+[2025-11-18 10:54:42] EPOCH 8 start
+[2025-11-18 11:02:01] EPOCH 8 end train_loss=2.0519 val_acc=0.44365361803084225
+[2025-11-18 11:02:01] EPOCH 9 start
+[2025-11-18 11:08:46] EPOCH 9 end train_loss=2.0460 val_acc=nan
+[2025-11-18 11:08:46] EPOCH 10 start
+[2025-11-18 11:15:57] EPOCH 10 end train_loss=2.0420 val_acc=0.44365361803084225
+[2025-11-18 11:15:57] EPOCH 11 start
+[2025-11-18 11:22:34] EPOCH 11 end train_loss=2.0317 val_acc=nan
+[2025-11-18 11:22:34] EPOCH 12 start
+[2025-11-18 11:30:04] EPOCH 12 end train_loss=2.0248 val_acc=0.44365361803084225
+[2025-11-18 11:30:04] EPOCH 13 start
+[2025-11-18 11:36:55] EPOCH 13 end train_loss=2.0183 val_acc=nan
+[2025-11-18 11:36:55] EPOCH 14 start
+[2025-11-18 11:44:14] EPOCH 14 end train_loss=2.0161 val_acc=0.44365361803084225
+[2025-11-18 11:44:14] EPOCH 15 start
+[2025-11-18 11:50:59] EPOCH 15 end train_loss=2.0094 val_acc=nan
+[2025-11-18 11:50:59] EPOCH 16 start
+[2025-11-18 11:58:18] EPOCH 16 end train_loss=2.0061 val_acc=0.44365361803084225
+[2025-11-18 11:58:18] EPOCH 17 start
+[2025-11-18 12:04:59] EPOCH 17 end train_loss=2.0046 val_acc=nan
+[2025-11-18 12:04:59] EPOCH 18 start
+[2025-11-18 12:12:09] EPOCH 18 end train_loss=2.0011 val_acc=0.44365361803084225
+[2025-11-18 12:12:09] EPOCH 19 start
+[2025-11-18 12:18:51] EPOCH 19 end train_loss=1.9963 val_acc=nan
+[2025-11-18 12:18:51] EPOCH 20 start
+[2025-11-18 12:26:01] EPOCH 20 end train_loss=1.9923 val_acc=0.44365361803084225
+[2025-11-18 12:26:01] EPOCH 21 start
+[2025-11-18 12:32:47] EPOCH 21 end train_loss=1.9873 val_acc=nan
+[2025-11-18 12:32:47] EPOCH 22 start
+[2025-11-18 12:40:04] EPOCH 22 end train_loss=1.9851 val_acc=0.44365361803084225
+[2025-11-18 12:40:04] EPOCH 23 start
+[2025-11-18 12:46:44] EPOCH 23 end train_loss=1.9847 val_acc=nan
+[2025-11-18 12:46:44] EPOCH 24 start
+[2025-11-18 12:53:56] EPOCH 24 end train_loss=1.9799 val_acc=0.44365361803084225
+[2025-11-18 12:53:56] EPOCH 25 start
+[2025-11-18 13:00:40] EPOCH 25 end train_loss=1.9762 val_acc=nan
+[2025-11-18 13:00:40] EPOCH 26 start
+[2025-11-18 13:08:08] EPOCH 26 end train_loss=1.9753 val_acc=0.44365361803084225
+[2025-11-18 13:08:08] EPOCH 27 start
+[2025-11-18 13:14:59] EPOCH 27 end train_loss=1.9732 val_acc=nan
+[2025-11-18 13:14:59] EPOCH 28 start
+[2025-11-18 13:22:21] EPOCH 28 end train_loss=1.9699 val_acc=0.44365361803084225
+[2025-11-18 13:22:21] EPOCH 29 start
+[2025-11-18 13:29:45] EPOCH 29 end train_loss=1.9687 val_acc=0.44365361803084225
+[2025-11-18 13:33:15] FINISH run best=0.444642151047845 test_acc=0.44505659021498295\n

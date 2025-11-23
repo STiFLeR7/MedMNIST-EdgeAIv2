@@ -1,0 +1,145 @@
+[2025-11-21 04:12:49] START /kaggle/input/skin-cancer-mnist-ham10000 arch=efficientnet_b0 a=0.8 t=2.0 b=0.0
+[2025-11-21 04:16:13] START ham run arch=efficientnet_b0 a=0.8 t=2.0 b=0.0
+[2025-11-21 04:17:23] START ham run arch=efficientnet_b0 a=0.8 t=2.0 b=0.0
+[2025-11-21 04:17:46] Student init load failed: name 'load_ckpt' is not defined
+[2025-11-21 04:17:46] Teacher load failed: name 'load_ckpt' is not defined
+[2025-11-21 04:17:46] EPOCH 0 start
+[2025-11-21 04:19:26] EPOCH 0 end loss=2.3815 val_acc=0.56187624750499
+[2025-11-21 04:19:26] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:19:26] EPOCH 1 start
+[2025-11-21 04:20:18] EPOCH 1 end loss=1.9202 val_acc=nan
+[2025-11-21 04:20:18] EPOCH 2 start
+[2025-11-21 04:21:16] EPOCH 2 end loss=1.8484 val_acc=0.5948103792415169
+[2025-11-21 04:21:16] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:21:16] EPOCH 3 start
+[2025-11-21 04:22:07] EPOCH 3 end loss=1.8084 val_acc=nan
+[2025-11-21 04:22:07] EPOCH 4 start
+[2025-11-21 04:23:04] EPOCH 4 end loss=1.7920 val_acc=0.6327345309381237
+[2025-11-21 04:23:04] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:23:04] EPOCH 5 start
+[2025-11-21 04:23:56] EPOCH 5 end loss=1.7599 val_acc=nan
+[2025-11-21 04:23:56] EPOCH 6 start
+[2025-11-21 04:24:52] EPOCH 6 end loss=1.7405 val_acc=0.6766467065868264
+[2025-11-21 04:24:52] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:24:52] EPOCH 7 start
+[2025-11-21 04:25:43] EPOCH 7 end loss=1.7197 val_acc=nan
+[2025-11-21 04:25:43] EPOCH 8 start
+[2025-11-21 04:26:40] EPOCH 8 end loss=1.7080 val_acc=0.6676646706586826
+[2025-11-21 04:26:40] EPOCH 9 start
+[2025-11-21 04:27:31] EPOCH 9 end loss=1.6951 val_acc=nan
+[2025-11-21 04:27:31] EPOCH 10 start
+[2025-11-21 04:28:28] EPOCH 10 end loss=1.6750 val_acc=0.6756487025948104
+[2025-11-21 04:28:28] EPOCH 11 start
+[2025-11-21 04:29:20] EPOCH 11 end loss=1.6516 val_acc=nan
+[2025-11-21 04:29:20] EPOCH 12 start
+[2025-11-21 04:30:16] EPOCH 12 end loss=1.6451 val_acc=0.6806387225548902
+[2025-11-21 04:30:16] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:30:16] EPOCH 13 start
+[2025-11-21 04:31:08] EPOCH 13 end loss=1.6216 val_acc=nan
+[2025-11-21 04:31:08] EPOCH 14 start
+[2025-11-21 04:32:06] EPOCH 14 end loss=1.6242 val_acc=0.720558882235529
+[2025-11-21 04:32:06] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:32:06] EPOCH 15 start
+[2025-11-21 04:32:57] EPOCH 15 end loss=1.6149 val_acc=nan
+[2025-11-21 04:32:57] EPOCH 16 start
+[2025-11-21 04:33:54] EPOCH 16 end loss=1.6005 val_acc=0.7275449101796407
+[2025-11-21 04:33:54] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:33:54] EPOCH 17 start
+[2025-11-21 04:34:46] EPOCH 17 end loss=1.5880 val_acc=nan
+[2025-11-21 04:34:46] EPOCH 18 start
+[2025-11-21 04:35:43] EPOCH 18 end loss=1.5868 val_acc=0.7215568862275449
+[2025-11-21 04:35:43] EPOCH 19 start
+[2025-11-21 04:36:34] EPOCH 19 end loss=1.5630 val_acc=nan
+[2025-11-21 04:36:34] EPOCH 20 start
+[2025-11-21 04:37:32] EPOCH 20 end loss=1.5633 val_acc=0.7015968063872255
+[2025-11-21 04:37:32] EPOCH 21 start
+[2025-11-21 04:38:24] EPOCH 21 end loss=1.5479 val_acc=nan
+[2025-11-21 04:38:24] EPOCH 22 start
+[2025-11-21 04:39:21] EPOCH 22 end loss=1.5439 val_acc=0.717564870259481
+[2025-11-21 04:39:21] EPOCH 23 start
+[2025-11-21 04:40:12] EPOCH 23 end loss=1.5328 val_acc=nan
+[2025-11-21 04:40:12] EPOCH 24 start
+[2025-11-21 04:41:09] EPOCH 24 end loss=1.5383 val_acc=0.7355289421157685
+[2025-11-21 04:41:09] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:41:09] EPOCH 25 start
+[2025-11-21 04:42:00] EPOCH 25 end loss=1.5315 val_acc=nan
+[2025-11-21 04:42:00] EPOCH 26 start
+[2025-11-21 04:42:57] EPOCH 26 end loss=1.5134 val_acc=0.7265469061876247
+[2025-11-21 04:42:57] EPOCH 27 start
+[2025-11-21 04:43:49] EPOCH 27 end loss=1.5056 val_acc=nan
+[2025-11-21 04:43:49] EPOCH 28 start
+[2025-11-21 04:44:46] EPOCH 28 end loss=1.4984 val_acc=0.7275449101796407
+[2025-11-21 04:44:46] EPOCH 29 start
+[2025-11-21 04:45:43] EPOCH 29 end loss=1.5046 val_acc=0.7065868263473054
+[2025-11-21 04:45:48] FINISH best=0.7355289421157685 test=0.7065868263473054
+[2025-11-21 04:58:20] START ham run arch=efficientnet_b0 a=0.8 t=2.0 b=0.0
+[2025-11-21 04:58:27] Student init load failed: name 'load_ckpt' is not defined
+[2025-11-21 04:58:27] Teacher load failed: name 'load_ckpt' is not defined
+[2025-11-21 04:58:27] EPOCH 0 start
+[2025-11-21 04:59:24] EPOCH 0 end loss=2.3866 val_acc=0.6017964071856288
+[2025-11-21 04:59:24] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 04:59:24] EPOCH 1 start
+[2025-11-21 05:00:15] EPOCH 1 end loss=1.9208 val_acc=nan
+[2025-11-21 05:00:15] EPOCH 2 start
+[2025-11-21 05:01:12] EPOCH 2 end loss=1.8424 val_acc=0.6237524950099801
+[2025-11-21 05:01:12] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:01:12] EPOCH 3 start
+[2025-11-21 05:02:02] EPOCH 3 end loss=1.8040 val_acc=nan
+[2025-11-21 05:02:02] EPOCH 4 start
+[2025-11-21 05:02:59] EPOCH 4 end loss=1.7793 val_acc=0.6586826347305389
+[2025-11-21 05:02:59] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:02:59] EPOCH 5 start
+[2025-11-21 05:03:50] EPOCH 5 end loss=1.7554 val_acc=nan
+[2025-11-21 05:03:50] EPOCH 6 start
+[2025-11-21 05:04:46] EPOCH 6 end loss=1.7366 val_acc=0.6676646706586826
+[2025-11-21 05:04:46] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:04:46] EPOCH 7 start
+[2025-11-21 05:05:38] EPOCH 7 end loss=1.7225 val_acc=nan
+[2025-11-21 05:05:38] EPOCH 8 start
+[2025-11-21 05:06:35] EPOCH 8 end loss=1.7089 val_acc=0.6666666666666666
+[2025-11-21 05:06:35] EPOCH 9 start
+[2025-11-21 05:07:27] EPOCH 9 end loss=1.7028 val_acc=nan
+[2025-11-21 05:07:27] EPOCH 10 start
+[2025-11-21 05:08:24] EPOCH 10 end loss=1.6831 val_acc=0.6906187624750499
+[2025-11-21 05:08:24] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:08:24] EPOCH 11 start
+[2025-11-21 05:09:15] EPOCH 11 end loss=1.6581 val_acc=nan
+[2025-11-21 05:09:15] EPOCH 12 start
+[2025-11-21 05:10:11] EPOCH 12 end loss=1.6488 val_acc=0.7105788423153693
+[2025-11-21 05:10:12] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:10:12] EPOCH 13 start
+[2025-11-21 05:11:03] EPOCH 13 end loss=1.6296 val_acc=nan
+[2025-11-21 05:11:03] EPOCH 14 start
+[2025-11-21 05:12:00] EPOCH 14 end loss=1.6290 val_acc=0.6846307385229541
+[2025-11-21 05:12:00] EPOCH 15 start
+[2025-11-21 05:12:51] EPOCH 15 end loss=1.6141 val_acc=nan
+[2025-11-21 05:12:51] EPOCH 16 start
+[2025-11-21 05:13:47] EPOCH 16 end loss=1.6018 val_acc=0.7455089820359282
+[2025-11-21 05:13:47] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:13:47] EPOCH 17 start
+[2025-11-21 05:14:38] EPOCH 17 end loss=1.5908 val_acc=nan
+[2025-11-21 05:14:38] EPOCH 18 start
+[2025-11-21 05:15:34] EPOCH 18 end loss=1.5851 val_acc=0.7115768463073853
+[2025-11-21 05:15:34] EPOCH 19 start
+[2025-11-21 05:16:25] EPOCH 19 end loss=1.5750 val_acc=nan
+[2025-11-21 05:16:25] EPOCH 20 start
+[2025-11-21 05:17:21] EPOCH 20 end loss=1.5669 val_acc=0.6936127744510978
+[2025-11-21 05:17:21] EPOCH 21 start
+[2025-11-21 05:18:12] EPOCH 21 end loss=1.5511 val_acc=nan
+[2025-11-21 05:18:12] EPOCH 22 start
+[2025-11-21 05:19:08] EPOCH 22 end loss=1.5545 val_acc=0.6776447105788423
+[2025-11-21 05:19:08] EPOCH 23 start
+[2025-11-21 05:20:00] EPOCH 23 end loss=1.5431 val_acc=nan
+[2025-11-21 05:20:00] EPOCH 24 start
+[2025-11-21 05:20:56] EPOCH 24 end loss=1.5376 val_acc=0.7405189620758483
+[2025-11-21 05:20:56] EPOCH 25 start
+[2025-11-21 05:21:46] EPOCH 25 end loss=1.5356 val_acc=nan
+[2025-11-21 05:21:46] EPOCH 26 start
+[2025-11-21 05:22:42] EPOCH 26 end loss=1.5135 val_acc=0.7125748502994012
+[2025-11-21 05:22:42] EPOCH 27 start
+[2025-11-21 05:23:34] EPOCH 27 end loss=1.5189 val_acc=nan
+[2025-11-21 05:23:34] EPOCH 28 start
+[2025-11-21 05:24:30] EPOCH 28 end loss=1.5013 val_acc=0.7215568862275449
+[2025-11-21 05:24:30] EPOCH 29 start
+[2025-11-21 05:25:26] EPOCH 29 end loss=1.5107 val_acc=0.7155688622754491
+[2025-11-21 05:25:31] FINISH best=0.7455089820359282 test=0.7155688622754491

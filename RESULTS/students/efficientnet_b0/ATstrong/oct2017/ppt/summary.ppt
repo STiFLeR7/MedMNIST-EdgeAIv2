@@ -1,0 +1,1 @@
+Dataset: oct2017\nArch: efficientnet_b0\nAblation: a=0.6, tau=4.0, beta=1500.0\nBest val acc: 0.444642151047845\nTest acc: 0.44505659021498295\n

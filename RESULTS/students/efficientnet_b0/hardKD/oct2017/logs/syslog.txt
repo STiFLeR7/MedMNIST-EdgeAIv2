@@ -1,0 +1,77 @@
+[2025-11-21 09:56:29] START oct run arch=efficientnet_b0 a=0.8 t=2.0 b=0.0
+[2025-11-21 09:56:57] Loaded student init: /kaggle/input/medmnist-efficientnetb0/pytorch/default/1/efficientnet_b0_rwightman-3dd342df.pth
+[2025-11-21 09:56:57] Loaded teacher ckpt: /kaggle/input/oct2017-resnet50/pytorch/default/1/ckpt-best.pth
+[2025-11-21 09:56:57] EPOCH 0 start
+[2025-11-21 10:01:05] EPOCH 0 end loss=0.6058 val_acc=0.9328823215239451
+[2025-11-21 10:01:05] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:01:05] EPOCH 1 start
+[2025-11-21 10:04:18] EPOCH 1 end loss=0.3995 val_acc=nan
+[2025-11-21 10:04:18] EPOCH 2 start
+[2025-11-21 10:08:27] EPOCH 2 end loss=0.3662 val_acc=0.9499732953533915
+[2025-11-21 10:08:27] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:08:27] EPOCH 3 start
+[2025-11-21 10:11:45] EPOCH 3 end loss=0.3488 val_acc=nan
+[2025-11-21 10:11:45] EPOCH 4 start
+[2025-11-21 10:16:01] EPOCH 4 end loss=0.3368 val_acc=0.9544834134472732
+[2025-11-21 10:16:01] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:16:01] EPOCH 5 start
+[2025-11-21 10:19:15] EPOCH 5 end loss=0.3305 val_acc=nan
+[2025-11-21 10:19:15] EPOCH 6 start
+[2025-11-21 10:23:27] EPOCH 6 end loss=0.3235 val_acc=0.9585187822681146
+[2025-11-21 10:23:27] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:23:27] EPOCH 7 start
+[2025-11-21 10:26:42] EPOCH 7 end loss=0.3154 val_acc=nan
+[2025-11-21 10:26:42] EPOCH 8 start
+[2025-11-21 10:30:54] EPOCH 8 end loss=0.3124 val_acc=0.9561450359029138
+[2025-11-21 10:30:54] EPOCH 9 start
+[2025-11-21 10:34:08] EPOCH 9 end loss=0.3096 val_acc=nan
+[2025-11-21 10:34:08] EPOCH 10 start
+[2025-11-21 10:38:17] EPOCH 10 end loss=0.3056 val_acc=0.9589935315411549
+[2025-11-21 10:38:17] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:38:17] EPOCH 11 start
+[2025-11-21 10:41:31] EPOCH 11 end loss=0.3013 val_acc=nan
+[2025-11-21 10:41:31] EPOCH 12 start
+[2025-11-21 10:45:40] EPOCH 12 end loss=0.2981 val_acc=0.9617826835202659
+[2025-11-21 10:45:40] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:45:40] EPOCH 13 start
+[2025-11-21 10:48:53] EPOCH 13 end loss=0.2935 val_acc=nan
+[2025-11-21 10:48:53] EPOCH 14 start
+[2025-11-21 10:53:01] EPOCH 14 end loss=0.2943 val_acc=0.962257432793306
+[2025-11-21 10:53:01] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 10:53:01] EPOCH 15 start
+[2025-11-21 10:56:15] EPOCH 15 end loss=0.2936 val_acc=nan
+[2025-11-21 10:56:15] EPOCH 16 start
+[2025-11-21 11:00:26] EPOCH 16 end loss=0.2874 val_acc=0.9643938045219869
+[2025-11-21 11:00:26] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 11:00:26] EPOCH 17 start
+[2025-11-21 11:03:39] EPOCH 17 end loss=0.2871 val_acc=nan
+[2025-11-21 11:03:39] EPOCH 18 start
+[2025-11-21 11:07:46] EPOCH 18 end loss=0.2869 val_acc=0.9652839594089372
+[2025-11-21 11:07:46] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 11:07:46] EPOCH 19 start
+[2025-11-21 11:10:58] EPOCH 19 end loss=0.2827 val_acc=nan
+[2025-11-21 11:10:58] EPOCH 20 start
+[2025-11-21 11:15:07] EPOCH 20 end loss=0.2806 val_acc=0.9653433030680671
+[2025-11-21 11:15:08] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 11:15:08] EPOCH 21 start
+[2025-11-21 11:18:22] EPOCH 21 end loss=0.2819 val_acc=nan
+[2025-11-21 11:18:22] EPOCH 22 start
+[2025-11-21 11:22:33] EPOCH 22 end loss=0.2781 val_acc=0.967657705774138
+[2025-11-21 11:22:33] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 11:22:33] EPOCH 23 start
+[2025-11-21 11:25:53] EPOCH 23 end loss=0.2770 val_acc=nan
+[2025-11-21 11:25:53] EPOCH 24 start
+[2025-11-21 11:30:16] EPOCH 24 end loss=0.2758 val_acc=0.9655213340454573
+[2025-11-21 11:30:16] EPOCH 25 start
+[2025-11-21 11:33:28] EPOCH 25 end loss=0.2749 val_acc=nan
+[2025-11-21 11:33:28] EPOCH 26 start
+[2025-11-21 11:37:38] EPOCH 26 end loss=0.2712 val_acc=0.9682511423654383
+[2025-11-21 11:37:38] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 11:37:38] EPOCH 27 start
+[2025-11-21 11:40:52] EPOCH 27 end loss=0.2706 val_acc=nan
+[2025-11-21 11:40:52] EPOCH 28 start
+[2025-11-21 11:45:03] EPOCH 28 end loss=0.2729 val_acc=0.9681917987063082
+[2025-11-21 11:45:03] EPOCH 29 start
+[2025-11-21 11:49:14] EPOCH 29 end loss=0.2701 val_acc=0.9684291733428283
+[2025-11-21 11:49:14] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/oct2017/models/ckpt-best_oct_efficientnet_b0_student_kd.pth
+[2025-11-21 11:50:17] FINISH best=0.9684291733428283 test=0.9689801784537996

@@ -1,0 +1,1 @@
+ISIC | arch=efficientnet_b0 | abl a=0.6,tau=6.0,beta=250.0 | best_val=0.9527481217872676 | test_acc=0.9554464339181987

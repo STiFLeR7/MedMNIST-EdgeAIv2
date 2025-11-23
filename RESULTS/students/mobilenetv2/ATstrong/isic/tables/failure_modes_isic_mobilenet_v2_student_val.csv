@@ -1,0 +1,28 @@
+true_class,pred_class,count,frac_row,rank
+actinic keratosis,pigmented benign keratosis,3,0.272727,1
+actinic keratosis,nevus,2,0.181818,2
+actinic keratosis,squamous cell carcinoma,1,0.090909,3
+basal cell carcinoma,squamous cell carcinoma,4,0.105263,1
+basal cell carcinoma,nevus,1,0.026316,2
+basal cell carcinoma,actinic keratosis,0,0.0,3
+dermatofibroma,basal cell carcinoma,1,0.111111,1
+dermatofibroma,squamous cell carcinoma,1,0.111111,2
+dermatofibroma,actinic keratosis,0,0.0,3
+melanoma,nevus,7,0.159091,1
+melanoma,seborrheic keratosis,6,0.136364,2
+melanoma,pigmented benign keratosis,1,0.022727,3
+nevus,actinic keratosis,3,0.083333,1
+nevus,squamous cell carcinoma,2,0.055556,2
+nevus,melanoma,1,0.027778,3
+pigmented benign keratosis,melanoma,3,0.065217,1
+pigmented benign keratosis,nevus,2,0.043478,2
+pigmented benign keratosis,squamous cell carcinoma,2,0.043478,3
+seborrheic keratosis,melanoma,8,1.0,1
+seborrheic keratosis,actinic keratosis,0,0.0,2
+seborrheic keratosis,basal cell carcinoma,0,0.0,3
+squamous cell carcinoma,basal cell carcinoma,4,0.222222,1
+squamous cell carcinoma,pigmented benign keratosis,2,0.111111,2
+squamous cell carcinoma,actinic keratosis,1,0.055556,3
+vascular lesion,actinic keratosis,0,0.0,1
+vascular lesion,basal cell carcinoma,0,0.0,2
+vascular lesion,dermatofibroma,0,0.0,3

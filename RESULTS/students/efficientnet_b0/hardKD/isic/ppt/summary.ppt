@@ -1,0 +1,1 @@
+Dataset: isic\nArch: efficientnet_b0\nAblation: a=0.8, tau=2.0, beta=0.0\nBest val acc: 0.5714285714285714\nTest acc: 0.3983050847457627\n

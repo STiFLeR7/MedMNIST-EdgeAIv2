@@ -1,0 +1,3 @@
+key,reason
+fc.weight,"shape_mismatch (1000, 512) -> (9, 512) (drop head)"
+fc.bias,"shape_mismatch (1000,) -> (9,) (drop head)"

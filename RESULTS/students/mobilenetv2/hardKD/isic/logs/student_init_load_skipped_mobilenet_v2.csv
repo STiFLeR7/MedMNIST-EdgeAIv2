@@ -1,0 +1,3 @@
+key,reason
+classifier.1.weight,"shape_mismatch (1000, 1280) -> (9, 1280) (drop head)"
+classifier.1.bias,"shape_mismatch (1000,) -> (9,) (drop head)"

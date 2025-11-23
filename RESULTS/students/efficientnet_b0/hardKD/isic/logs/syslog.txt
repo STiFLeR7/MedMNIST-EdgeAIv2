@@ -1,0 +1,77 @@
+[2025-11-18 09:34:19] START run dataset=isic arch=efficientnet_b0 alpha=0.8 tau=2.0 beta=0.0 img=192 bs=96 workers=2
+[2025-11-18 09:34:30] Loaded student init: /kaggle/input/medmnist-efficientnetb0/pytorch/default/1/efficientnet_b0.pth
+[2025-11-18 09:34:32] Loaded teacher ckpt: /kaggle/input/resnet50-isic/pytorch/default/1/ckpt-best.pth
+[2025-11-18 09:34:32] EPOCH 0 start
+[2025-11-18 09:38:28] START run dataset=isic arch=efficientnet_b0 alpha=0.8 tau=2.0 beta=0.0 img=192 bs=96 workers=2
+[2025-11-18 09:38:30] Loaded student init: /kaggle/input/medmnist-efficientnetb0/pytorch/default/1/efficientnet_b0.pth
+[2025-11-18 09:38:30] Loaded teacher ckpt: /kaggle/input/resnet50-isic/pytorch/default/1/ckpt-best.pth
+[2025-11-18 09:38:30] EPOCH 0 start
+[2025-11-18 09:39:01] EPOCH 0 end train_loss=2.5344 val_acc=0.16964285714285715
+[2025-11-18 09:39:01] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:39:01] EPOCH 1 start
+[2025-11-18 09:39:19] EPOCH 1 end train_loss=2.3405 val_acc=nan
+[2025-11-18 09:39:19] EPOCH 2 start
+[2025-11-18 09:39:39] EPOCH 2 end train_loss=2.1521 val_acc=0.16964285714285715
+[2025-11-18 09:39:39] EPOCH 3 start
+[2025-11-18 09:39:56] EPOCH 3 end train_loss=2.0839 val_acc=nan
+[2025-11-18 09:39:56] EPOCH 4 start
+[2025-11-18 09:40:16] EPOCH 4 end train_loss=2.0146 val_acc=0.3080357142857143
+[2025-11-18 09:40:16] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:40:16] EPOCH 5 start
+[2025-11-18 09:40:33] EPOCH 5 end train_loss=1.9656 val_acc=nan
+[2025-11-18 09:40:33] EPOCH 6 start
+[2025-11-18 09:40:53] EPOCH 6 end train_loss=1.9242 val_acc=0.4017857142857143
+[2025-11-18 09:40:53] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:40:53] EPOCH 7 start
+[2025-11-18 09:41:11] EPOCH 7 end train_loss=1.8685 val_acc=nan
+[2025-11-18 09:41:11] EPOCH 8 start
+[2025-11-18 09:41:30] EPOCH 8 end train_loss=1.8421 val_acc=0.4419642857142857
+[2025-11-18 09:41:30] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:41:30] EPOCH 9 start
+[2025-11-18 09:41:48] EPOCH 9 end train_loss=1.7958 val_acc=nan
+[2025-11-18 09:41:48] EPOCH 10 start
+[2025-11-18 09:42:07] EPOCH 10 end train_loss=1.7787 val_acc=0.47767857142857145
+[2025-11-18 09:42:07] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:42:07] EPOCH 11 start
+[2025-11-18 09:42:24] EPOCH 11 end train_loss=1.7366 val_acc=nan
+[2025-11-18 09:42:24] EPOCH 12 start
+[2025-11-18 09:42:44] EPOCH 12 end train_loss=1.7162 val_acc=0.5044642857142857
+[2025-11-18 09:42:44] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:42:44] EPOCH 13 start
+[2025-11-18 09:43:01] EPOCH 13 end train_loss=1.6828 val_acc=nan
+[2025-11-18 09:43:01] EPOCH 14 start
+[2025-11-18 09:43:21] EPOCH 14 end train_loss=1.6565 val_acc=0.4955357142857143
+[2025-11-18 09:43:21] EPOCH 15 start
+[2025-11-18 09:43:38] EPOCH 15 end train_loss=1.6357 val_acc=nan
+[2025-11-18 09:43:38] EPOCH 16 start
+[2025-11-18 09:43:57] EPOCH 16 end train_loss=1.6092 val_acc=0.47767857142857145
+[2025-11-18 09:43:57] EPOCH 17 start
+[2025-11-18 09:44:15] EPOCH 17 end train_loss=1.5939 val_acc=nan
+[2025-11-18 09:44:15] EPOCH 18 start
+[2025-11-18 09:44:34] EPOCH 18 end train_loss=1.5756 val_acc=0.5133928571428571
+[2025-11-18 09:44:35] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:44:35] EPOCH 19 start
+[2025-11-18 09:44:52] EPOCH 19 end train_loss=1.5504 val_acc=nan
+[2025-11-18 09:44:52] EPOCH 20 start
+[2025-11-18 09:45:11] EPOCH 20 end train_loss=1.5423 val_acc=0.5535714285714286
+[2025-11-18 09:45:11] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:45:11] EPOCH 21 start
+[2025-11-18 09:45:29] EPOCH 21 end train_loss=1.5296 val_acc=nan
+[2025-11-18 09:45:29] EPOCH 22 start
+[2025-11-18 09:45:48] EPOCH 22 end train_loss=1.5315 val_acc=0.5223214285714286
+[2025-11-18 09:45:48] EPOCH 23 start
+[2025-11-18 09:46:05] EPOCH 23 end train_loss=1.5020 val_acc=nan
+[2025-11-18 09:46:05] EPOCH 24 start
+[2025-11-18 09:46:25] EPOCH 24 end train_loss=1.4846 val_acc=0.5446428571428571
+[2025-11-18 09:46:25] EPOCH 25 start
+[2025-11-18 09:46:43] EPOCH 25 end train_loss=1.4632 val_acc=nan
+[2025-11-18 09:46:43] EPOCH 26 start
+[2025-11-18 09:47:03] EPOCH 26 end train_loss=1.4493 val_acc=0.5357142857142857
+[2025-11-18 09:47:03] EPOCH 27 start
+[2025-11-18 09:47:20] EPOCH 27 end train_loss=1.4468 val_acc=nan
+[2025-11-18 09:47:20] EPOCH 28 start
+[2025-11-18 09:47:40] EPOCH 28 end train_loss=1.4392 val_acc=0.5133928571428571
+[2025-11-18 09:47:40] EPOCH 29 start
+[2025-11-18 09:47:59] EPOCH 29 end train_loss=1.4333 val_acc=0.5714285714285714
+[2025-11-18 09:47:59] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/hardKD/isic/models/ckpt-best_isic_efficientnet_b0_student_kd.pth
+[2025-11-18 09:48:10] FINISH run best=0.5714285714285714 test_acc=0.3983050847457627\n

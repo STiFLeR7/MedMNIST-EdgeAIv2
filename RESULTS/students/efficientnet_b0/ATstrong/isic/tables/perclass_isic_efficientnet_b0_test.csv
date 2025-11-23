@@ -1,0 +1,10 @@
+class,precision,recall,f1,support
+actinic keratosis,0.75,0.1875,0.3,16
+basal cell carcinoma,0.2222222222222222,0.875,0.3544303797468354,16
+dermatofibroma,0.0,0.0,0.0,16
+melanoma,0.20833333333333334,0.3125,0.25,16
+nevus,0.6,0.5625,0.5806451612903225,16
+pigmented benign keratosis,0.4,0.25,0.3076923076923077,16
+seborrheic keratosis,0.0,0.0,0.0,3
+squamous cell carcinoma,0.0,0.0,0.0,16
+vascular lesion,1.0,0.6666666666666666,0.8,3

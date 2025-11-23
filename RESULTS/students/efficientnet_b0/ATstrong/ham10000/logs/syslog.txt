@@ -1,0 +1,83 @@
+[2025-11-21 04:45:48] START ham run arch=efficientnet_b0 a=0.6 t=4.0 b=1500.0
+[2025-11-21 04:45:49] Student init load failed: name 'load_ckpt' is not defined
+[2025-11-21 04:45:49] Teacher load failed: name 'load_ckpt' is not defined
+[2025-11-21 04:45:49] EPOCH 0 start
+[2025-11-21 04:45:51] EXCEPTION: Trying to backward through the graph a second time (or directly access saved tensors after they have already been freed). Saved intermediate values of the graph are freed when you call .backward() or autograd.grad(). Specify retain_graph=True if you need to backward through the graph a second time or if you need to access saved tensors after calling backward.
+Traceback (most recent call last):
+  File "/tmp/ipykernel_48/1461536795.py", line 91, in kd_single_run_ham
+    loss.backward()
+  File "/usr/local/lib/python3.11/dist-packages/torch/_tensor.py", line 626, in backward
+    torch.autograd.backward(
+  File "/usr/local/lib/python3.11/dist-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/usr/local/lib/python3.11/dist-packages/torch/autograd/graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to backward through the graph a second time (or directly access saved tensors after they have already been freed). Saved intermediate values of the graph are freed when you call .backward() or autograd.grad(). Specify retain_graph=True if you need to backward through the graph a second time or if you need to access saved tensors after calling backward.
+
+[2025-11-21 04:45:51] Saved partial: /kaggle/working/RESULTS/efficientnet_b0/ATstrong/ham10000/models/ckpt-partial_ham_efficientnet_b0_1763700351.pth
+[2025-11-21 05:25:31] START ham run arch=efficientnet_b0 a=0.6 t=4.0 b=1500.0
+[2025-11-21 05:25:32] Student init load failed: name 'load_ckpt' is not defined
+[2025-11-21 05:25:32] Teacher load failed: name 'load_ckpt' is not defined
+[2025-11-21 05:25:32] EPOCH 0 start
+[2025-11-21 05:26:29] EPOCH 0 end loss=11.9446 val_acc=0.03293413173652695
+[2025-11-21 05:26:29] Saved best -> /kaggle/working/RESULTS/efficientnet_b0/ATstrong/ham10000/models/ckpt-best_ham_efficientnet_b0_student_kd.pth
+[2025-11-21 05:26:29] EPOCH 1 start
+[2025-11-21 05:27:19] EPOCH 1 end loss=9.7355 val_acc=nan
+[2025-11-21 05:27:19] EPOCH 2 start
+[2025-11-21 05:28:15] EPOCH 2 end loss=9.4809 val_acc=0.03293413173652695
+[2025-11-21 05:28:15] EPOCH 3 start
+[2025-11-21 05:29:06] EPOCH 3 end loss=9.3522 val_acc=nan
+[2025-11-21 05:29:06] EPOCH 4 start
+[2025-11-21 05:30:02] EPOCH 4 end loss=9.2760 val_acc=0.03293413173652695
+[2025-11-21 05:30:02] EPOCH 5 start
+[2025-11-21 05:30:53] EPOCH 5 end loss=9.2145 val_acc=nan
+[2025-11-21 05:30:53] EPOCH 6 start
+[2025-11-21 05:31:50] EPOCH 6 end loss=9.1726 val_acc=0.03293413173652695
+[2025-11-21 05:31:50] EPOCH 7 start
+[2025-11-21 05:32:41] EPOCH 7 end loss=9.1351 val_acc=nan
+[2025-11-21 05:32:41] EPOCH 8 start
+[2025-11-21 05:33:38] EPOCH 8 end loss=9.1080 val_acc=0.03293413173652695
+[2025-11-21 05:33:38] EPOCH 9 start
+[2025-11-21 05:34:30] EPOCH 9 end loss=9.0870 val_acc=nan
+[2025-11-21 05:34:30] EPOCH 10 start
+[2025-11-21 05:35:28] EPOCH 10 end loss=9.0663 val_acc=0.03293413173652695
+[2025-11-21 05:35:28] EPOCH 11 start
+[2025-11-21 05:36:19] EPOCH 11 end loss=9.0386 val_acc=nan
+[2025-11-21 05:36:19] EPOCH 12 start
+[2025-11-21 05:37:16] EPOCH 12 end loss=9.0160 val_acc=0.03293413173652695
+[2025-11-21 05:37:16] EPOCH 13 start
+[2025-11-21 05:38:08] EPOCH 13 end loss=8.9901 val_acc=nan
+[2025-11-21 05:38:08] EPOCH 14 start
+[2025-11-21 05:39:06] EPOCH 14 end loss=8.9835 val_acc=0.03293413173652695
+[2025-11-21 05:39:06] EPOCH 15 start
+[2025-11-21 05:39:58] EPOCH 15 end loss=8.9704 val_acc=nan
+[2025-11-21 05:39:58] EPOCH 16 start
+[2025-11-21 05:40:55] EPOCH 16 end loss=8.9521 val_acc=0.03293413173652695
+[2025-11-21 05:40:55] EPOCH 17 start
+[2025-11-21 05:41:47] EPOCH 17 end loss=8.9329 val_acc=nan
+[2025-11-21 05:41:47] EPOCH 18 start
+[2025-11-21 05:42:43] EPOCH 18 end loss=8.9203 val_acc=0.03293413173652695
+[2025-11-21 05:42:43] EPOCH 19 start
+[2025-11-21 05:43:35] EPOCH 19 end loss=8.8962 val_acc=nan
+[2025-11-21 05:43:35] EPOCH 20 start
+[2025-11-21 05:44:33] EPOCH 20 end loss=8.8856 val_acc=0.03293413173652695
+[2025-11-21 05:44:33] EPOCH 21 start
+[2025-11-21 05:45:24] EPOCH 21 end loss=8.8606 val_acc=nan
+[2025-11-21 05:45:24] EPOCH 22 start
+[2025-11-21 05:46:21] EPOCH 22 end loss=8.8505 val_acc=0.03293413173652695
+[2025-11-21 05:46:21] EPOCH 23 start
+[2025-11-21 05:47:13] EPOCH 23 end loss=8.8315 val_acc=nan
+[2025-11-21 05:47:13] EPOCH 24 start
+[2025-11-21 05:48:10] EPOCH 24 end loss=8.8266 val_acc=0.03293413173652695
+[2025-11-21 05:48:10] EPOCH 25 start
+[2025-11-21 05:49:01] EPOCH 25 end loss=8.8277 val_acc=nan
+[2025-11-21 05:49:01] EPOCH 26 start
+[2025-11-21 05:49:59] EPOCH 26 end loss=8.7921 val_acc=0.03293413173652695
+[2025-11-21 05:49:59] EPOCH 27 start
+[2025-11-21 05:50:51] EPOCH 27 end loss=8.7880 val_acc=nan
+[2025-11-21 05:50:51] EPOCH 28 start
+[2025-11-21 05:51:50] EPOCH 28 end loss=8.7602 val_acc=0.03293413173652695
+[2025-11-21 05:51:50] EPOCH 29 start
+[2025-11-21 05:52:48] EPOCH 29 end loss=8.7824 val_acc=0.03293413173652695
+[2025-11-21 05:52:53] FINISH best=0.03293413173652695 test=0.03293413173652695
