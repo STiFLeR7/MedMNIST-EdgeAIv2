@@ -4,13 +4,13 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Medical AI](https://img.shields.io/badge/Medical_AI-Research-red?style=for-the-badge)
+![Author](https://img.shields.io/badge/Author-STiFLeR7-blue?style=for-the-badge&logo=github)
 
 ---
 
 ## 🚀 Project Summary
 
-**MedMNIST-EdgeAIv2** is a rigorous research framework designed to bridge the gap between high-performance medical image analysis and resource-constrained edge deployment. By leveraging advanced **Knowledge Distillation (KD)** and **Attention Transfer (AT)** techniques, this project successfully compresses heavy "Teacher" models (ResNet50) into lightweight "Student" architectures (MobileNetV2, EfficientNetB0, ResNet18) without significant loss in diagnostic accuracy.
+**MedMNIST-EdgeAIv2** is a rigorous research framework designed by **[STiFLeR7](https://github.com/STiFLeR7)** to bridge the gap between high-performance medical image analysis and resource-constrained edge deployment. By leveraging advanced **Knowledge Distillation (KD)** and **Attention Transfer (AT)** techniques, this project successfully compresses heavy "Teacher" models (ResNet50) into lightweight "Student" architectures (MobileNetV2, EfficientNetB0, ResNet18) without significant loss in diagnostic accuracy.
 
 The framework is battle-tested across multiple modalities:
 *   **Dermatoscopy**: HAM10000 & ISIC (Skin Lesion Classification)
@@ -21,6 +21,37 @@ The framework is battle-tested across multiple modalities:
 We employ a composite distillation loss function that orchestrates three critical components:
 
 $$ L_{total} = \alpha L_{CE} + (1 - \alpha) L_{KD} + \beta L_{AT} $$
+
+### Distillation Workflow
+```mermaid
+graph TD
+    subgraph Teacher [Teacher Model (ResNet50)]
+        T_Img[Input Image] --> T_Feat[Feature Maps]
+        T_Feat --> T_Logits[Logits]
+    end
+
+    subgraph Student [Student Model (EffNet/MobileNet)]
+        S_Img[Input Image] --> S_Feat[Feature Maps]
+        S_Feat --> S_Logits[Logits]
+    end
+
+    T_Logits -->|Soft Targets| KD_Loss[KL Divergence Loss]
+    S_Logits -->|Soft Preds| KD_Loss
+    
+    T_Feat -->|Attention Maps| AT_Loss[Attention Transfer Loss]
+    S_Feat -->|Attention Maps| AT_Loss
+
+    Label[Ground Truth] -->|Hard Targets| CE_Loss[Cross-Entropy Loss]
+    S_Logits -->|Hard Preds| CE_Loss
+
+    KD_Loss --> Total_Loss[Total Loss]
+    AT_Loss --> Total_Loss
+    CE_Loss --> Total_Loss
+    
+    style Teacher fill:#f9f,stroke:#333
+    style Student fill:#bbf,stroke:#333
+    style Total_Loss fill:#f55,stroke:#333,color:#fff
+```
 
 1.  **Soft Knowledge Distillation ($L_{KD}$)**: Transfers "dark knowledge" (inter-class relationships) from the Teacher's logits to the Student using Kullback-Leibler divergence with temperature scaling ($\tau$).
 2.  **Attention Transfer ($L_{AT}$)**: Forces the Student to mimic the spatial attention maps of the Teacher, ensuring it focuses on the same pathological features (lesions, drusen, membranes).
@@ -111,4 +142,8 @@ Aggregate all results into a publication-ready PDF:
 *   **HAM10000**: Attention Transfer significantly improves evaluating pigmented lesions by forcing the student to look at irregular borders rather than skin artifacts.
 
 ---
-*Maintained by the MedMNIST-EdgeAI Research Team.*
+### 👨‍💻 Author & Maintainer
+
+Developed with ❤️ and ☕ by **[STiFLeR7](https://github.com/STiFLeR7)**.
+*   *GitHub*: [github.com/STiFLeR7](https://github.com/STiFLeR7)
+*   *Project*: **MedMNIST-EdgeAIv2**
