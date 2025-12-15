@@ -28,3 +28,9 @@ data/
 models/
 
 external_data/
+
+.env
+*.ps1
+*.pdf
+*.txt
+test_gemini.py
